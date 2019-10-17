@@ -1,2 +1,0 @@
-from za_id_number.za_identity_number import SouthAfricanValidation
-

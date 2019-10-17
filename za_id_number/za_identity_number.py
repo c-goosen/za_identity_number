@@ -40,7 +40,7 @@ class SouthAfricanIdentityNumber(object):
 
     def validate(self) -> bool:
 
-        return verify(self.id_number)
+        return bool(verify(self.id_number))
 
     def identity_dict(self) -> dict:
 
@@ -59,7 +59,7 @@ class SouthAfricanIdentityNumber(object):
 
 
 if __name__ == "__main__":
-    val = SouthAfricanIdentityValidate("9001245289086")
+    val = SouthAfricanIdentityValidate("9202204720082")
     print(val.validate())
     print(val.identity())
 
