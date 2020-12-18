@@ -1,4 +1,4 @@
-# za-identity-number
+# za_identity_number
 Library to validate/check and retrieve ID number info for South African IDs
 
 
