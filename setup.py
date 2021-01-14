@@ -3,15 +3,31 @@ import os
 from setuptools import setup, find_packages
 import codecs
 
-__version__ = '0.0.1'
+from os import path
+
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
+    long_description = f.read()
+
+__version__ = "0.0.2"
 
 curr_dir = os.path.abspath(os.path.dirname(__file__))
 
-long_description = ""
+long_description = (long_description,)
+long_description_content_type = "text/markdown"
+
 with codecs.open(os.path.join(curr_dir, "README.md"), encoding="utf-8") as readme:
     long_description = readme.read()
 
-tests_require = ["pytest", "pytest-cov", "codecov", "flake8", "black", "bandit", "pytest-runner"]
+tests_require = [
+    "pytest",
+    "pytest-cov",
+    "codecov",
+    "flake8",
+    "black",
+    "bandit",
+    "pytest-runner",
+]
 
 setup(
     name="za-id-number",
@@ -20,6 +36,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url="https://github.com/c-goosen/za-identity-number",
+
     author="Christo Goosen",
     author_email="christogoosen@gmail.com",
     python_requires=">=3.5.0",
@@ -48,7 +65,7 @@ setup(
     packages=find_packages(
         exclude=["docs", "docs-src", "tests", "tests.*", "tutorial"]
     ),
-    setup_requires=["luhn"],
+    setup_requires=["luhn >= 0.2.0 "],
     test_suite="tests",
     tests_require=tests_require,
     # cmdclass={"validate": ValidateCommand},
