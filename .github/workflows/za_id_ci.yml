@@ -17,7 +17,7 @@ jobs:
         python-version: [3.8]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@master
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
@@ -32,7 +32,7 @@ jobs:
 
       - name: Install Dependencies
         run: poetry run python setup.py install
-        
+
       - name: Install Dev Dependencies
         run: poetry install
 
@@ -45,5 +45,11 @@ jobs:
       - name: Run Bandit Static Security Analysis
         run: poetry run bandit -r za_id_number/
 
+      - name: Run Snyk to check for vulnerabilities
+          uses: snyk/actions/python@master
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          with:
+            args: --severity-threshold=high --file=pyproject.toml
       - name: Run Tests
         run: poetry run setup.py test
