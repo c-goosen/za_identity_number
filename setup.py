@@ -34,8 +34,9 @@ setup(
     version=__version__,
     description="Library South African ID number validation and easy data extraction.",
     long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/c-goosen/asyncio-railgun",
+    long_description_content_type='text/markdown',
+    url="https://github.com/c-goosen/za-identity-number",
+
     author="Christo Goosen",
     author_email="christogoosen@gmail.com",
     python_requires=">=3.5.0",
