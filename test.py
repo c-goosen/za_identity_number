@@ -1,6 +1,6 @@
-from za_id_number import SouthAfricanValidation
+from za_id_number.za_identity_number import SouthAfricanIdentityValidate
 
-validate_id = SouthAfricanValidation()
+validate_id = SouthAfricanIdentityValidate('9001245289086')
 
 if __name__ == "__main__":
-    print(validate_id.identity_dict('9001245289086'))
+    print(validate_id.identity())
