@@ -1,6 +1,6 @@
-import pytest
+import pytest  # noqa
 from za_id_number.za_id_number import SouthAfricanIdentityValidate
-from datetime import date, datetime
+from datetime import datetime
 
 
 def test_validation():
@@ -51,4 +51,4 @@ def test_age():
 
 def test_birthdate():
     birthdate = SouthAfricanIdentityValidate("9902204720082").birthdate()
-    assert birthdate == datetime.strptime(f"99-02-20", "%y-%m-%d")
+    assert birthdate == datetime.strptime("99-02-20", "%y-%m-%d")
