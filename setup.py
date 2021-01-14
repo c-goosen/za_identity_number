@@ -67,5 +67,5 @@ setup(
     setup_requires=["luhn >= 0.2.0 "],
     test_suite="tests",
     tests_require=tests_require,
-    # cmdclass={"validate": ValidateCommand},
+    extras_require={"dev": ["bandit", "black", "flake8"] + tests_require},
 )
