@@ -35,3 +35,14 @@ if __name__ == "__main__":
     print(f"Valid: {valid}, Identity: {za_identity}")
 ```
 
+Methods:
+```
+SouthAfricanIdentityValidate("9202204720082").validate()
+SouthAfricanIdentityValidate("9202204720082").identity()
+SouthAfricanIdentityValidate("9202204720082").gender()
+SouthAfricanIdentityValidate("9202204720082").citizen()
+SouthAfricanIdentityValidate("9202204720082")identity_length()
+SouthAfricanIdentityValidate("9202204720082").age()
+
+
+```

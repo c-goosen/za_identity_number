@@ -1,5 +1,6 @@
-from luhn import verify
+from datetime import date, datetime
 
+from luhn import verify
 
 class SouthAfricanIdentityValidate(object):
     def __init__(self, id_number):
@@ -23,6 +24,15 @@ class SouthAfricanIdentityValidate(object):
         else:
             return True
 
+    def gender(self) -> str:
+        return SouthAfricanIdentityNumber(self.id_number).gender
+
+    def age(self) -> int:
+        return SouthAfricanIdentityNumber(self.id_number).age
+
+    def birthdate(self) -> datetime:
+        return SouthAfricanIdentityNumber(self.id_number).birthdate
+
 class SouthAfricanIdentityNumber(object):
     """
     Identity Number Class.
@@ -31,12 +41,14 @@ class SouthAfricanIdentityNumber(object):
 
     def __init__(self, id_number):
         self.id_number = id_number
-        self.year = id_number[:2]
-        self.month = id_number[2:4]
-        self.day = id_number[4:6]
+        self.birthdate = datetime.strptime(f"{id_number[:2]}-{id_number[2:4]}-{id_number[4:6]}",'%y-%m-%d')
+        self.year = self.birthdate.year
+        self.month = self.birthdate.month
+        self.day = self.birthdate.day
         self.gender = self.gender()
         self.citizenship = self.citizen()
         self.valid = self.validate()
+        self.age = self.age()
 
     def validate(self) -> bool:
 
@@ -57,9 +69,8 @@ class SouthAfricanIdentityNumber(object):
         citizen_num = int(self.id_number[10])
         return True if citizen_num == 0 else False
 
-
-if __name__ == "__main__":
-    val = SouthAfricanIdentityValidate("9202204720082")
-    print(val.validate())
-    print(val.identity())
+    def age(self):
+        today = date.today()
+        age = (today.year - self.birthdate.year) - ( 1 if ((today.month, today.day) < (self.birthdate.month, self.birthdate.day)) else 0)
+        return int(age)
 
