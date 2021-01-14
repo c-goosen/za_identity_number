@@ -51,5 +51,6 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --severity-threshold=high --file=pyproject.toml
+
       - name: Run Tests
-        run: poetry run setup.py test
+        run: poetry run python setup.py test
