@@ -1,0 +1,46 @@
+name: Django CI
+
+on:
+  push:
+    branches: [dev, test, master]
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install Dependencies
+        run: poetry run python setup.py install
+
+      - name: Verify code has been formatted with Black
+        run: poetry run black . --check
+
+      - name: Code Static Analysis
+        run: poetry run flake8
+
+      - name: Run Bandit Static Security Analysis
+        run: poetry run bandit -r za_id_number/
+
+      - name: Run Tests
+        run: poetry run setup.py test
