@@ -1,0 +1,16 @@
+[[package]]
+category = "main"
+description = "Generate and verify Luhn check digits"
+name = "luhn"
+optional = false
+python-versions = "*"
+version = "0.2.0"
+
+[metadata]
+content-hash = "2887ed725f28019298a909a73228886e728fe1a8b6dece4a723455f2c0b16a2f"
+python-versions = "^3.7"
+
+[metadata.files]
+luhn = [
+    {file = "luhn-0.2.0.tar.gz", hash = "sha256:917174cecce8bcbbe56ac0d904dbedd06594b21b6f31d5a3ec161d455b0e59f7"},
+]

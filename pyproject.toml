@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "za_identity_number"
+version = "0.1.0"
+description = "ZA Identity Number checking and validation library"
+authors = ["Christo Goosen <christogoosen@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+luhn = "^0.2.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
