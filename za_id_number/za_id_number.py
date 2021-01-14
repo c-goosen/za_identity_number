@@ -2,6 +2,7 @@ from datetime import date, datetime
 
 from luhn import verify
 
+
 class SouthAfricanIdentityValidate(object):
     def __init__(self, id_number):
         self.id_number = id_number
@@ -33,6 +34,7 @@ class SouthAfricanIdentityValidate(object):
     def birthdate(self) -> datetime:
         return SouthAfricanIdentityNumber(self.id_number).birthdate
 
+
 class SouthAfricanIdentityNumber(object):
     """
     Identity Number Class.
@@ -41,7 +43,9 @@ class SouthAfricanIdentityNumber(object):
 
     def __init__(self, id_number):
         self.id_number = id_number
-        self.birthdate = datetime.strptime(f"{id_number[:2]}-{id_number[2:4]}-{id_number[4:6]}",'%y-%m-%d')
+        self.birthdate = datetime.strptime(
+            f"{id_number[:2]}-{id_number[2:4]}-{id_number[4:6]}", "%y-%m-%d"
+        )
         self.year = self.birthdate.year
         self.month = self.birthdate.month
         self.day = self.birthdate.day
@@ -71,6 +75,9 @@ class SouthAfricanIdentityNumber(object):
 
     def age(self):
         today = date.today()
-        age = (today.year - self.birthdate.year) - ( 1 if ((today.month, today.day) < (self.birthdate.month, self.birthdate.day)) else 0)
+        age = (today.year - self.birthdate.year) - (
+            1
+            if ((today.month, today.day) < (self.birthdate.month, self.birthdate.day))
+            else 0
+        )
         return int(age)
-
