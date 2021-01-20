@@ -1,12 +1,13 @@
 [tool.poetry]
-name = "za-identity-number"
-version = "0.3.0"
+name = "za-id-number"
+version = "0.0.3"
 description = "ZA Identity Number checking and validation library"
 authors = ["Christo Goosen <christogoosen@gmail.com>"]
 license = "MIT"
 packages = [
-    { include = "za-id-number" },
-    { include = "za-id-number/**/*.py" },
+    { include = "za_id_number" },
+    { include = "za_id_number/*.py" },
+    { include = "za_id_number/**/*.py" },
 ]
 
 [tool.poetry.dependencies]

@@ -3,13 +3,12 @@ import os
 from setuptools import setup, find_packages
 import codecs
 
-from os import path
+from za_id_number import __version__
 
-this_directory = path.abspath(path.dirname(__file__))
+this_directory = os.path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
-__version__ = "0.0.3"
 
 curr_dir = os.path.abspath(os.path.dirname(__file__))
 
