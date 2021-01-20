@@ -9,7 +9,7 @@ this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 curr_dir = os.path.abspath(os.path.dirname(__file__))
 
@@ -35,7 +35,7 @@ setup(
     description="Library South African ID number validation and easy data extraction.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/c-goosen/za-identity-number",
+    url="https://github.com/c-goosen/za_identity_number",
     author="Christo Goosen",
     author_email="christogoosen@gmail.com",
     python_requires=">=3.5.0",

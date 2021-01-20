@@ -1,17 +1,27 @@
 # za_identity_number
 Library to validate/check and retrieve ID number info for South African IDs
 
+Current version: 0.0.3
+
+Poetry & pip compatibility
+
+Python 3.5 or greater for f-strings
+
 Installation:
 
 pip:
 ```buildoutcfg
-pip install za-id-nnumber
+
+pip install za-id-number
+
 ```
 
 poetry:
 
 ```buildoutcfg
-poetry add za-id-nnumber
+
+poetry add za-id-number
+
 ```
 
 ZA Id Numbers:
