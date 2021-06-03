@@ -1,6 +1,6 @@
 from datetime import date, datetime
-
 from luhn import verify
+from functools import lru_cache
 
 
 class SouthAfricanIdentityValidate(object):
@@ -43,23 +43,44 @@ class SouthAfricanIdentityNumber(object):
 
     def __init__(self, id_number):
         self.id_number = id_number
-        self.birthdate = datetime.strptime(
-            f"{id_number[:2]}-{id_number[2:4]}-{id_number[4:6]}", "%y-%m-%d"
-        )
-        self.year = self.birthdate.year
-        self.month = self.birthdate.month
-        self.day = self.birthdate.day
+        self.valid = self.validate()
+        self.birthdate = self.calculate_birthday()
+        self.year = self.get_year()
+        self.month = self.get_month()
+        self.day = self.get_day()
         self.gender = self.gender()
         self.citizenship = self.citizen()
-        self.valid = self.validate()
         self.age = self.age()
 
-    def validate(self) -> bool:
+    def get_year(self):
+        if self.is_datetime(self.birthdate):
+            return self.birthdate.year
+        else:
+            return None
 
+    def get_month(self):
+        return (self.birthdate.month if self.is_datetime(self.birthdate) else None)
+
+    def get_day(self):
+        return (self.birthdate.day if self.is_datetime(self.birthdate) else None)
+
+    @lru_cache
+    def is_datetime(self, birthdate):
+        return True if birthdate else False
+
+    def calculate_birthday(self):
+        try:
+            datetime.strptime(
+            f"{self.id_number[:2]}-{self.id_number[2:4]}-{self.id_number[4:6]}", "%y-%m-%d"
+            )
+            print(f"datetime.strptime {datetime.strptime}")
+        except Exception:
+            return None
+
+    def validate(self) -> bool:
         return bool(verify(self.id_number))
 
     def identity_dict(self) -> dict:
-
         return self.__dict__
 
     def gender(self):
@@ -74,10 +95,13 @@ class SouthAfricanIdentityNumber(object):
         return True if citizen_num == 0 else False
 
     def age(self):
-        today = date.today()
-        age = (today.year - self.birthdate.year) - (
-            1
-            if ((today.month, today.day) < (self.birthdate.month, self.birthdate.day))
-            else 0
-        )
-        return int(age)
+        if self.is_datetime(self.birthdate):
+            today = date.today()
+            age = (today.year - self.birthdate.year) - (
+                1
+                if ((today.month, today.day) < (self.birthdate.month, self.birthdate.day))
+                else 0
+            )
+            return int(age)
+        else:
+            return None

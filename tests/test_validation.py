@@ -52,3 +52,16 @@ def test_age():
 def test_birthdate():
     birthdate = SouthAfricanIdentityValidate("9902204720082").birthdate()
     assert birthdate == datetime.strptime("99-02-20", "%y-%m-%d")
+
+@pytest.mark.parametrize("test_input,expected", [
+    ("0000000000000", False),
+    ("0000000000001", False),
+    ("0010000000000", False),
+    ("00100000000001", False),
+]
+                         )
+def test_edge_cases_validate(test_input, expected):
+    assert not SouthAfricanIdentityValidate("0000000000000").validate()
+
+def test_github_issue_4():
+    assert not SouthAfricanIdentityValidate("0000000000000").validate()
