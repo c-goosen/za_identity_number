@@ -5,8 +5,8 @@ import codecs
 
 from za_id_number import __version__
 
-this_directory = os.path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
+this_directory = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 
@@ -63,7 +63,7 @@ setup(
     packages=find_packages(
         exclude=["docs", "docs-src", "tests", "tests.*", "tutorial"]
     ),
-    setup_requires=["luhn >= 0.2.0 "],
+    setup_requires=["luhn >= 0.2.0 ", "setuptools"],
     test_suite="tests",
     tests_require=tests_require,
     extras_require={"dev": ["bandit", "black", "flake8"] + tests_require},
