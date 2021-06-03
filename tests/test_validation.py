@@ -52,3 +52,13 @@ def test_age():
 def test_birthdate():
     birthdate = SouthAfricanIdentityValidate("9902204720082").birthdate()
     assert birthdate == datetime.strptime("99-02-20", "%y-%m-%d")
+
+
+def test_all_zeroes():
+    valid = SouthAfricanIdentityValidate("0000000000000").validate()
+    assert not valid
+
+
+def test_alphabetical():
+    valid = SouthAfricanIdentityValidate("123456ABC7890").validate()
+    assert not valid

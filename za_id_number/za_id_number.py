@@ -9,7 +9,10 @@ class SouthAfricanIdentityValidate(object):
 
     def validate(self):
         if self.identity_length():
-            return SouthAfricanIdentityNumber(self.id_number).valid
+            try:
+                return SouthAfricanIdentityNumber(self.id_number).valid
+            except ValueError:
+                return False
         else:
             return False
 
