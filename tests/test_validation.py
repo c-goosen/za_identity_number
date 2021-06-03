@@ -1,6 +1,6 @@
 import pytest  # noqa
 from za_id_number.za_id_number import SouthAfricanIdentityValidate
-from datetime import datetime
+import datetime
 
 
 def test_validation():
@@ -24,7 +24,7 @@ def test_identity_types():
     assert isinstance(identity["year"], int)
     assert isinstance(identity["month"], int)
     assert isinstance(identity["day"], int)
-    assert isinstance(identity["birthdate"], datetime)
+    assert isinstance(identity["birthdate"], datetime.datetime)
     assert isinstance(identity["age"], int)
 
 
@@ -46,22 +46,38 @@ def test_identity_negative():
 
 
 def test_age():
-    assert SouthAfricanIdentityValidate("9902204720082").age() == 21
+    from dateutil.relativedelta import relativedelta
+    year = '99'
+    start_date = datetime.datetime.strptime(f"{year}-02-20", "%y-%m-%d")
+    end_date = datetime.date.today()
+    age = relativedelta(end_date, start_date).years
+    assert SouthAfricanIdentityValidate(f"{year}02204720082").age() == age
 
 
 def test_birthdate():
     birthdate = SouthAfricanIdentityValidate("9902204720082").birthdate()
-    assert birthdate == datetime.strptime("99-02-20", "%y-%m-%d")
+    assert birthdate == datetime.datetime.strptime("99-02-20", "%y-%m-%d")
+
+
+def test_all_zeroes():
+    valid = SouthAfricanIdentityValidate("0000000000000").validate()
+    assert valid
+
+
+def test_alphabetical():
+    valid = SouthAfricanIdentityValidate("123456ABC7890").validate()
+    assert not valid
 
 @pytest.mark.parametrize("test_input,expected", [
-    ("0000000000000", False),
+    ("0000000000000", True),
     ("0000000000001", False),
     ("0010000000000", False),
     ("00100000000001", False),
 ]
                          )
 def test_edge_cases_validate(test_input, expected):
-    assert not SouthAfricanIdentityValidate("0000000000000").validate()
+    assert expected == SouthAfricanIdentityValidate(test_input).validate()
 
 def test_github_issue_4():
-    assert not SouthAfricanIdentityValidate("0000000000000").validate()
+    valid = SouthAfricanIdentityValidate("0000000000000").validate()
+    assert valid

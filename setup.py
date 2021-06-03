@@ -26,6 +26,7 @@ tests_require = [
     "black",
     "bandit",
     "pytest-runner",
+    "python-dateutil"
 ]
 
 setup(
