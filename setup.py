@@ -32,7 +32,7 @@ tests_require = [
 setup(
     name="za-id-number",
     version=__version__,
-    description="Library South African ID number validation and easy data extraction.",
+    description=" South African (RSA/ZA) ID number validation and easy data extraction Library.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/c-goosen/za_identity_number",

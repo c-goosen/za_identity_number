@@ -15,6 +15,8 @@ if __name__ == "__main__":
 
     print(identity_obj.is_datetime(identity_obj.birthdate))
     print(identity_obj.birthdate)
+    print(identity_obj.year)
+    print(identity_obj.get_year())
     print(identity_obj.calculate_birthday())
     print("Luhn")
     print(verify("0000000000000"))
