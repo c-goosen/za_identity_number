@@ -37,6 +37,7 @@ class SouthAfricanIdentityNumber(object):
         if self.birthdate:
             return self.birthdate.month if self.birthdate else None
 
+    @lru_cache(100)
     def calculate_birthday(self):
         try:
             return datetime.strptime(
@@ -72,6 +73,7 @@ class SouthAfricanIdentityNumber(object):
         except Exception:
             return False
 
+    @lru_cache(100)
     def get_age(self) -> int:
         try:
             today = date.today()
@@ -94,7 +96,7 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
         super().__init__(id_number)
         self.valid = self.validate()
 
-    @lru_cache
+    @lru_cache(100)
     def valid_birth_date(self) -> bool:
         try:
             if self.calculate_birthday():
@@ -120,6 +122,7 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
         else:
             return {}
 
+    @lru_cache(100)
     def identity_length(self) -> bool:
         if len(str(self.id_number)) != 13:
             return False
