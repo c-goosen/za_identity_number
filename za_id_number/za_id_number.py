@@ -1,7 +1,7 @@
 from datetime import date, datetime
 
 from luhn import verify
-from za_id_number.constants import Gender, Citizen
+from za_id_number.constants import Gender, CitizenshipClass
 
 from functools import lru_cache
 
@@ -14,6 +14,7 @@ class SouthAfricanIdentityNumber(object):
 
     def __init__(self, id_number: str):
         self.id_number: str = id_number
+        self.clean_input()
         self.birthdate: datetime = self.calculate_birthday()
         self.year = self.get_year()
         self.month = self.get_month()
@@ -21,6 +22,9 @@ class SouthAfricanIdentityNumber(object):
         self.gender = self.get_gender()
         self.citizenship = self.get_citizenship()
         self.age = self.get_age()
+
+    def clean_input(self):
+        self.id_number = self.id_number.strip()
 
     def get_day(self):
         return self.birthdate.day if self.birthdate else None
@@ -55,14 +59,18 @@ class SouthAfricanIdentityNumber(object):
 
     def get_citizenship(self):
         """
-        Needs work
-        TODO: Resident vs born citizen
+        Citizen or resident.
+        Only these two classes of people can recieve and ID number
         """
         try:
             citizen_num = int(self.id_number[10])
-            return True if citizen_num == 0 else False
+            return (
+                CitizenshipClass.CITIZEN_BORN.value
+                if citizen_num == 0
+                else CitizenshipClass.CITIZEN_NOT_BORN.value
+            )
         except Exception:
-            return None
+            return False
 
     def get_age(self) -> int:
         try:

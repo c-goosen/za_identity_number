@@ -1,7 +1,7 @@
 from enum import Enum
 
 """
-Constants from: 
+Constants from:
 https://www.westerncape.gov.za/general-publication/decoding-your-south-african-id-number-0
 
 """
@@ -18,12 +18,12 @@ class Gender(Enum):
     OTHER = "Other"
 
 
-class Citizen(Enum):
+class CitizenshipClass(Enum):
     """
     The next digit (C) shows if you're an SA citizen status with 0 denoting that you were born a SA citizen and 1
     denoting that you're a permanent resident.
     """
 
-    CITIZEN_BORN = "Born RSA citizen"
-    CITIZEN_NOT_BORN = "Permanent RSA resident"
+    CITIZEN_BORN = "South African Citizen"
+    CITIZEN_NOT_BORN = "Permanent resident"
     NONCITIZEN = "Not a RSA Citizen"

@@ -1,7 +1,6 @@
 import pytest  # noqa
 from za_id_number.za_id_number import SouthAfricanIdentityNumber
-from za_id_number.constants import Gender, Citizen
-from datetime import datetime
+from za_id_number.constants import Gender, CitizenshipClass
 
 
 @pytest.fixture
@@ -35,3 +34,11 @@ def test_get_day(test_identity):
 
 def test_gender(test_identity):
     assert test_identity.gender == Gender.MALE.value
+
+
+def test_get_citizenship(test_identity):
+    assert test_identity.get_citizenship() == CitizenshipClass.CITIZEN_BORN.value
+
+
+def test_citizenship(test_identity):
+    assert test_identity.citizenship == CitizenshipClass.CITIZEN_BORN.value
