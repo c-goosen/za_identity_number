@@ -5,34 +5,46 @@ import datetime
 from dateutil.relativedelta import relativedelta
 from dataclasses import dataclass
 
+
 @dataclass
 class DateTimeTest:
     """Class for keeping track of an item in inventory."""
-    year:str = '90'
-    month:str = '01'
-    date:str = '24'
+
+    year: str = "90"
+    month: str = "01"
+    date: str = "24"
+
 
 """
 Fixtures
 """
+
+
 @pytest.fixture
 def test_identity_birthdate():
     birthday = DateTimeTest()
-    return SouthAfricanIdentityValidate(
-        f"{birthday.year}{birthday.month}{birthday.date}5289086"
-    ), birthday
+    return (
+        SouthAfricanIdentityValidate(
+            f"{birthday.year}{birthday.month}{birthday.date}5289086"
+        ),
+        birthday,
+    )
+
 
 @pytest.fixture
 def test_true_identity():
     return SouthAfricanIdentityValidate("9001245289086")
 
+
 @pytest.fixture
 def test_false_identity():
     return SouthAfricanIdentityValidate("9902204720082")
 
+
 """
 Tests
 """
+
 
 def test_validation(test_true_identity):
     assert test_true_identity.validate()
@@ -76,7 +88,7 @@ def test_identity_negative(test_false_identity):
 
 
 def test_age():
-    year = '99'
+    year = "99"
     start_date = datetime.datetime.strptime(f"{year}-02-20", "%y-%m-%d")
     end_date = datetime.date.today()
     age = int(relativedelta(end_date, start_date).years)
@@ -88,8 +100,7 @@ def test_birthdate(test_identity_birthdate):
     year = test_identity_birthdate[1].year
     month = test_identity_birthdate[1].month
     date = test_identity_birthdate[1].date
-    assert birthdate == datetime.datetime.strptime(
-        f"{year}-{month}-{date}", "%y-%m-%d")
+    assert birthdate == datetime.datetime.strptime(f"{year}-{month}-{date}", "%y-%m-%d")
 
 
 def test_all_zeroes():
@@ -106,38 +117,45 @@ def test_alphabetical():
     valid = SouthAfricanIdentityValidate("123456ABC7890").validate()
     assert not valid
 
-@pytest.mark.parametrize("test_input,expected", [
-    ("0000000000000", False),
-    ("0000000000001", False),
-    ("0010000000000", False),
-    ("00100000000001", False),
-]
-                         )
+
+@pytest.mark.parametrize(
+    "test_input,expected",
+    [
+        ("0000000000000", False),
+        ("0000000000001", False),
+        ("0010000000000", False),
+        ("00100000000001", False),
+    ],
+)
 def test_edge_cases_validate(test_input, expected):
     assert expected == SouthAfricanIdentityValidate(test_input).validate()
+
 
 def test_github_issue_4():
     valid = SouthAfricanIdentityValidate("0000000000000").validate()
     assert not valid
 
-@pytest.mark.parametrize("test_input,expected", [
-    ("9902204720082", True),
-    ("990220472008", False),
-    ("99022047200", False),
-    ("9902204720", False),
-    ("990220472", False),
-    ("99022047", False),
-    ("9902204", False),
-    ("990220", False),
-    ("99022", False),
-    ("9902", False),
-    ("990", False),
-    ("99", False),
-    ("9", False),
-    ("99022047200821", False),
-    ("990220472008212", False),
-    ("990220472008213", False),
-]
-                         )
+
+@pytest.mark.parametrize(
+    "test_input,expected",
+    [
+        ("9902204720082", True),
+        ("990220472008", False),
+        ("99022047200", False),
+        ("9902204720", False),
+        ("990220472", False),
+        ("99022047", False),
+        ("9902204", False),
+        ("990220", False),
+        ("99022", False),
+        ("9902", False),
+        ("990", False),
+        ("99", False),
+        ("9", False),
+        ("99022047200821", False),
+        ("990220472008212", False),
+        ("990220472008213", False),
+    ],
+)
 def test_identity_length(test_input, expected):
     assert expected == SouthAfricanIdentityValidate(test_input).identity_length()

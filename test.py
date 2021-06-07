@@ -1,4 +1,7 @@
-from za_id_number.za_id_number import SouthAfricanIdentityValidate, SouthAfricanIdentityNumber
+from za_id_number.za_id_number import (
+    SouthAfricanIdentityValidate,
+    SouthAfricanIdentityNumber,
+)
 from luhn import verify
 
 validate_id = SouthAfricanIdentityValidate("9001245289086")
