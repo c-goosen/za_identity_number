@@ -18,7 +18,7 @@ if __name__ == "__main__":
     print(SouthAfricanIdentityValidate("0000000000000").validate())
     print("Identity")
 
-    #Identity Class
+    # Identity Class
     identity_obj = SouthAfricanIdentityNumber("9001245289086")
     # Functions
     print(identity_obj.get_age())
@@ -39,4 +39,3 @@ if __name__ == "__main__":
     print(identity_obj.gender)
     print(identity_obj.citizenship)
     print(identity_obj.age)
-

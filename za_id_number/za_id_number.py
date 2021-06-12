@@ -97,7 +97,6 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
         self.valid = self.validate()
 
     @lru_cache(100)
-
     def valid_birth_date(self) -> bool:
         """
         Ensures that birthday is a valid date.
