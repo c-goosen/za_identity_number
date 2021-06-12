@@ -97,7 +97,13 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
         self.valid = self.validate()
 
     @lru_cache(100)
+
     def valid_birth_date(self) -> bool:
+        """
+        Ensures that birthday is a valid date.
+        A test case for this is the ID number 0000000000000
+        00-00-00 is not a valid date.
+        """
         try:
             if self.calculate_birthday():
                 return True
@@ -107,6 +113,12 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
             return True
 
     def validate(self) -> bool:
+        """
+        Valid ID or not?
+        Luhn algorithm validates the ID number
+        Additional check is where the date makes sense
+        In Luhn 0000
+        """
         if self.identity_length() and self.valid_birth_date():
             try:
                 return bool(verify(self.id_number))
@@ -116,6 +128,10 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
             return False
 
     def identity(self) -> dict:
+        """
+        Return dict of identity
+        Class to dict
+        """
         # return self.__dict__
         if self.identity_length():
             return self.__dict__
@@ -124,6 +140,9 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
 
     @lru_cache(100)
     def identity_length(self) -> bool:
+        """
+        Test identity number is 13 characters
+        """
         if len(str(self.id_number)) != 13:
             return False
         else:

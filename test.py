@@ -2,24 +2,41 @@ from za_id_number.za_id_number import (
     SouthAfricanIdentityValidate,
     SouthAfricanIdentityNumber,
 )
-from luhn import verify
-
-validate_id = SouthAfricanIdentityValidate("9001245289086")
-identity_obj = SouthAfricanIdentityNumber("9001245289086")
 
 if __name__ == "__main__":
+    # Validation Class, inherits from Indentity Class
+    validate_id = SouthAfricanIdentityValidate("9001245289086")
+    # Class attributes
+    print(validate_id.valid)
+    # Other attributes are from identity Class
+    # Functions
+    print(validate_id.valid_birth_date())
+    print(validate_id.validate())
     print(validate_id.identity())
-    print(validate_id.gender())
-    print(validate_id.age())
-    print(validate_id.birthdate())
+    print(validate_id.identity_length())
     print("SouthAfricanIdentityValidate(0000000000000).validate()")
     print(SouthAfricanIdentityValidate("0000000000000").validate())
     print("Identity")
 
-    print(identity_obj.is_datetime(identity_obj.birthdate))
+    #Identity Class
+    identity_obj = SouthAfricanIdentityNumber("9001245289086")
+    # Functions
+    print(identity_obj.get_age())
+    print(identity_obj.get_citizenship())
+    print(identity_obj.get_gender())
+    print(identity_obj.calculate_birthday())
+    print(identity_obj.get_month())
+    print(identity_obj.get_year())
+    print(identity_obj.get_day())
+    print(identity_obj.clean_input())
+
+    # Class attributes
+    print(identity_obj.id_number)
     print(identity_obj.birthdate)
     print(identity_obj.year)
-    print(identity_obj.get_year())
-    print(identity_obj.calculate_birthday())
-    print("Luhn")
-    print(verify("0000000000000"))
+    print(identity_obj.month)
+    print(identity_obj.day)
+    print(identity_obj.gender)
+    print(identity_obj.citizenship)
+    print(identity_obj.age)
+
