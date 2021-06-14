@@ -29,4 +29,3 @@ class CitizenshipClass(Enum):
     CITIZEN_BORN = "South African Citizen"
     CITIZEN_NOT_BORN = "Permanent resident"
     NONCITIZEN = "Not a RSA Citizen"
-

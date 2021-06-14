@@ -45,9 +45,7 @@ class SouthAfricanIdentityNumber(object):
                 LIB_DATE_FORMAT,
             )
             if datetime_obj > datetime.now():
-                return datetime_obj.replace(
-                    year=(datetime_obj.year-100)
-                )
+                return datetime_obj.replace(year=(datetime_obj.year - 100))
             return datetime_obj
 
         except ValueError:

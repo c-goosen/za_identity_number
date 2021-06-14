@@ -46,9 +46,9 @@ def test_citizenship(test_identity):
 
 
 def test_nineteenth_century():
-    year = '63'
-    month = '02'
-    date = '20'
+    year = "63"
+    month = "02"
+    date = "20"
     test_datetime = datetime.datetime(int(f"19{year}"), int(month), int(date))
     identity = SouthAfricanIdentityNumber(f"{year}{month}{date}4720082")
     assert identity.birthdate == test_datetime
