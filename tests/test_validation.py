@@ -1,6 +1,7 @@
 import pytest  # noqa
 from za_id_number.za_id_number import SouthAfricanIdentityValidate
 import datetime
+from za_id_number.constants import LIB_DATE_FORMAT
 
 from dateutil.relativedelta import relativedelta
 from dataclasses import dataclass
@@ -89,7 +90,7 @@ def test_identity_negative(test_false_identity):
 
 def test_age():
     year = "99"
-    start_date = datetime.datetime.strptime(f"{year}-02-20", "%y-%m-%d")
+    start_date = datetime.datetime.strptime(f"{year}-02-20", LIB_DATE_FORMAT)
     end_date = datetime.date.today()
     age = int(relativedelta(end_date, start_date).years)
     assert SouthAfricanIdentityValidate(f"{year}02204720082").get_age() == age
@@ -100,7 +101,7 @@ def test_birthdate(test_identity_birthdate):
     year = test_identity_birthdate[1].year
     month = test_identity_birthdate[1].month
     date = test_identity_birthdate[1].date
-    assert birthdate == datetime.datetime.strptime(f"{year}-{month}-{date}", "%y-%m-%d")
+    assert birthdate == datetime.datetime.strptime(f"{year}-{month}-{date}", LIB_DATE_FORMAT)
 
 
 def test_all_zeroes():

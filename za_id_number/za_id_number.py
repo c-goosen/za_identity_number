@@ -1,7 +1,7 @@
 from datetime import date, datetime
 
 from luhn import verify
-from za_id_number.constants import Gender, CitizenshipClass
+from za_id_number.constants import Gender, CitizenshipClass, LIB_DATE_FORMAT
 
 from functools import lru_cache
 
@@ -40,10 +40,15 @@ class SouthAfricanIdentityNumber(object):
     @lru_cache(100)
     def calculate_birthday(self):
         try:
-            return datetime.strptime(
+            datetime_obj = datetime.strptime(
                 f"{self.id_number[:2]}-{self.id_number[2:4]}-{self.id_number[4:6]}",
-                "%y-%m-%d",
+                LIB_DATE_FORMAT,
             )
+            if datetime_obj > datetime.now():
+                return datetime_obj.replace(
+                    year=(datetime_obj.year-100)
+                )
+            return datetime_obj
 
         except ValueError:
             return None

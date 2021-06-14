@@ -6,6 +6,8 @@ https://www.westerncape.gov.za/general-publication/decoding-your-south-african-i
 
 """
 
+LIB_DATE_FORMAT = "%y-%m-%d"
+
 
 class Gender(Enum):
     """
@@ -27,3 +29,4 @@ class CitizenshipClass(Enum):
     CITIZEN_BORN = "South African Citizen"
     CITIZEN_NOT_BORN = "Permanent resident"
     NONCITIZEN = "Not a RSA Citizen"
+
