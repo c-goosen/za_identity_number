@@ -3,6 +3,9 @@ from za_id_number.za_id_number import SouthAfricanIdentityNumber
 from za_id_number.constants import Gender, CitizenshipClass, LIB_DATE_FORMAT
 import datetime
 
+@pytest.fixture
+def test_identity_female():
+    return SouthAfricanIdentityNumber("9902200037082")
 
 @pytest.fixture
 def test_identity():
@@ -33,8 +36,11 @@ def test_get_day(test_identity):
     assert test_identity.get_day() == 20
 
 
-def test_gender(test_identity):
+def test_gender(test_identity, test_identity_female):
+    # Test Male
     assert test_identity.gender == Gender.MALE.value
+    # Test Female
+    assert test_identity.gender == Gender.FEMALE.value
 
 
 def test_get_citizenship(test_identity):

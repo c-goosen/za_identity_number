@@ -53,7 +53,8 @@ class SouthAfricanIdentityNumber(object):
 
     def get_gender(self) -> str:
         try:
-            gen_num = int(self.id_number[6:9])
+            gen_num = int(self.id_number[6:10])
+            print(gen_num)
             if gen_num <= 4999:
                 return Gender.MALE.value
             else:
