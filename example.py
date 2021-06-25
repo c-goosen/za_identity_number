@@ -1,4 +1,6 @@
-from za_id_number.za_identity_number import SouthAfricanIdentityValidate
+from za_id_number.za_id_number import (
+    SouthAfricanIdentityValidate,
+)
 
 if __name__ == "__main__":
     za_validation = SouthAfricanIdentityValidate("9202204720082")

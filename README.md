@@ -2,7 +2,7 @@
 ZA / RSA Identity Number 
 Library to validate/check/manipulate and retrieve ID number info for South African IDs
 
-Current version: 0.0.4-3 
+Current version: 0.0.5
 
 Poetry & pip compatibility
 

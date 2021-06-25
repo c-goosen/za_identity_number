@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "za-id-number"
-version = "0.0.4-2"
+version = "0.0.4-3"
 description = "South African (RSA/ZA) Identity Number checking and validation library"
 authors = ["Christo Goosen <christogoosen@gmail.com>"]
 license = "MIT"

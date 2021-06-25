@@ -1,11 +1,13 @@
 import pytest  # noqa
 from za_id_number.za_id_number import SouthAfricanIdentityNumber
-from za_id_number.constants import Gender, CitizenshipClass, LIB_DATE_FORMAT
+from za_id_number.constants import Gender, CitizenshipClass
 import datetime
+
 
 @pytest.fixture
 def test_identity_female():
     return SouthAfricanIdentityNumber("9902200037082")
+
 
 @pytest.fixture
 def test_identity():
