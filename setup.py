@@ -65,7 +65,7 @@ setup(
         exclude=["docs", "docs-src", "tests", "tests.*", "tutorial"]
     ),
     setup_requires=["luhn >= 0.2.0 ", "setuptools"],
-    install_requires=["luhn >= 0.2.0 "],
+    install_requires=["luhn >= 0.2.0, loguru >= 0.5.3"],
     test_suite="tests",
     tests_require=tests_require,
     extras_require={"dev": ["bandit", "black", "flake8"] + tests_require},

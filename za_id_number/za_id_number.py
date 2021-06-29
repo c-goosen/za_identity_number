@@ -4,6 +4,8 @@ from luhn import verify
 from za_id_number.constants import Gender, CitizenshipClass, LIB_DATE_FORMAT
 
 from functools import lru_cache
+import sys
+from loguru import logger
 
 
 class SouthAfricanIdentityNumber(object):
@@ -12,7 +14,7 @@ class SouthAfricanIdentityNumber(object):
     Validates and sets up Identity Number class object
     """
 
-    def __init__(self, id_number: str):
+    def __init__(self, id_number: str, logging: bool = False, logging_conf: dict = {}):
         self.id_number: str = id_number
         self.clean_input()
         self.birthdate: datetime = self.calculate_birthday()
@@ -22,6 +24,29 @@ class SouthAfricanIdentityNumber(object):
         self.gender = self.get_gender()
         self.citizenship = self.get_citizenship()
         self.age = self.get_age()
+        self.logging_config = (
+            logging_conf
+            if logging_conf
+            else {
+                "handlers": [
+                    {
+                        "sink": sys.stdout,
+                        "format": "[Lib za_id_number] {time} - {message}",
+                    },
+                    {
+                        "sink": "za_id_number.log",
+                        "serialize": True,
+                        "format": "[Lib za_id_number] {time} - {message}",
+                    },
+                ],
+            }
+        )
+        logger.configure(**self.logging_config)
+        if not logging:
+            logger.disable("za_id_number")
+        else:
+            logger.enable("za_id_number")
+            logger.info("Logger Enabled")
 
     def clean_input(self):
         self.id_number = self.id_number.strip()
@@ -45,21 +70,23 @@ class SouthAfricanIdentityNumber(object):
                 LIB_DATE_FORMAT,
             )
             if datetime_obj > datetime.now():
-                return datetime_obj.replace(year=(datetime_obj.year - 100))
-            return datetime_obj
+                return datetime_obj.replace(year=(datetime_obj.year - 100)).date()
+            return datetime_obj.date()
 
-        except ValueError:
+        except ValueError as e:
+            logger.error(e)
             return None
 
     def get_gender(self) -> str:
         try:
             gen_num = int(self.id_number[6:10])
-            print(gen_num)
             if gen_num <= 4999:
-                return Gender.MALE.value
-            else:
                 return Gender.FEMALE.value
-        except Exception:
+            else:
+                return Gender.MALE.value
+
+        except Exception as e:
+            logger.error(e)
             return None
 
     def get_citizenship(self):
@@ -74,7 +101,8 @@ class SouthAfricanIdentityNumber(object):
                 if citizen_num == 0
                 else CitizenshipClass.CITIZEN_NOT_BORN.value
             )
-        except Exception:
+        except Exception as e:
+            logger.error(e)
             return False
 
     @lru_cache(100)
@@ -90,14 +118,17 @@ class SouthAfricanIdentityNumber(object):
                 else 0
             )
             return int(age)
-        except Exception:
+        except Exception as e:
+            logger.error(e)
             return None
 
 
 class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
-    def __init__(self, id_number):
+    def __init__(
+        self, id_number: str, logging: bool = False, logging_config: dict = {}
+    ):
         # super(SouthAfricanIdentityValidate, self).__init__(id_number)
-        super().__init__(id_number)
+        super().__init__(id_number, logging, logging_config)
         self.valid = self.validate()
 
     @lru_cache(100)
@@ -112,7 +143,8 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
                 return True
             else:
                 return False
-        except Exception:
+        except Exception as e:
+            logger.error(e)
             return True
 
     def validate(self) -> bool:
@@ -125,7 +157,8 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
         if self.identity_length() and self.valid_birth_date():
             try:
                 return bool(verify(self.id_number))
-            except ValueError:
+            except ValueError as e:
+                logger.error(e)
                 return False
         else:
             return False
