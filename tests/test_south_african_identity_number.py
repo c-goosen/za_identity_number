@@ -6,12 +6,15 @@ import datetime
 
 @pytest.fixture
 def test_identity_female():
-    return SouthAfricanIdentityNumber("9902200037082")
+    return SouthAfricanIdentityNumber("9902200037082", logging=True)
 
+@pytest.fixture
+def test_identity_male():
+    return SouthAfricanIdentityNumber("2001015800085", logging=True)
 
 @pytest.fixture
 def test_identity():
-    return SouthAfricanIdentityNumber("9902204720082")
+    return SouthAfricanIdentityNumber("9902204720082", logging=True)
 
 
 def test_year(test_identity):
@@ -38,11 +41,13 @@ def test_get_day(test_identity):
     assert test_identity.get_day() == 20
 
 
-def test_gender(test_identity, test_identity_female):
-    # Test Male
-    assert test_identity.gender == Gender.MALE.value
+def test_gender(test_identity, test_identity_female, test_identity_male):
+    # Test Female
+    assert test_identity_female.gender == Gender.FEMALE.value
     # Test Female
     assert test_identity.gender == Gender.FEMALE.value
+    # Test Male
+    assert test_identity_male.gender == Gender.MALE.value
 
 
 def test_get_citizenship(test_identity):
@@ -57,7 +62,7 @@ def test_nineteenth_century():
     year = "63"
     month = "02"
     date = "20"
-    test_datetime = datetime.datetime(int(f"19{year}"), int(month), int(date))
+    test_datetime = datetime.datetime(int(f"19{year}"), int(month), int(date)).date()
     identity = SouthAfricanIdentityNumber(f"{year}{month}{date}4720082")
     assert identity.birthdate == test_datetime
     assert identity.year == test_datetime.year

@@ -67,7 +67,7 @@ def test_identity_types(test_true_identity):
     assert isinstance(identity["year"], int)
     assert isinstance(identity["month"], int)
     assert isinstance(identity["day"], int)
-    assert isinstance(identity["birthdate"], datetime.datetime)
+    assert isinstance(identity["birthdate"], datetime.date)
     assert isinstance(identity["age"], int)
 
 
@@ -103,7 +103,7 @@ def test_birthdate(test_identity_birthdate):
     date = test_identity_birthdate[1].date
     assert birthdate == datetime.datetime.strptime(
         f"{year}-{month}-{date}", LIB_DATE_FORMAT
-    )
+    ).date()
 
 
 def test_all_zeroes():
