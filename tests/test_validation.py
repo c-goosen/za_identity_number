@@ -101,9 +101,10 @@ def test_birthdate(test_identity_birthdate):
     year = test_identity_birthdate[1].year
     month = test_identity_birthdate[1].month
     date = test_identity_birthdate[1].date
-    assert birthdate == datetime.datetime.strptime(
-        f"{year}-{month}-{date}", LIB_DATE_FORMAT
-    ).date()
+    assert (
+        birthdate
+        == datetime.datetime.strptime(f"{year}-{month}-{date}", LIB_DATE_FORMAT).date()
+    )
 
 
 def test_all_zeroes():

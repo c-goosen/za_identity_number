@@ -8,9 +8,11 @@ import datetime
 def test_identity_female():
     return SouthAfricanIdentityNumber("9902200037082", logging=True)
 
+
 @pytest.fixture
 def test_identity_male():
     return SouthAfricanIdentityNumber("2001015800085", logging=True)
+
 
 @pytest.fixture
 def test_identity():
