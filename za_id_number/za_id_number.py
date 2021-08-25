@@ -1,11 +1,15 @@
 from datetime import date, datetime
-
 from luhn import verify
 from za_id_number.constants import Gender, CitizenshipClass, LIB_DATE_FORMAT
 
 from functools import lru_cache
-import sys
 from loguru import logger
+
+# Since this is a library we immediately disable logging.
+# If logging within the library is desired, then call:
+#     logger.enable("za_id_number")
+# from within your script.
+logger.disable("za_id_number")
 
 
 class SouthAfricanIdentityNumber(object):
@@ -14,7 +18,7 @@ class SouthAfricanIdentityNumber(object):
     Validates and sets up Identity Number class object
     """
 
-    def __init__(self, id_number: str, logging: bool = False, logging_conf: dict = {}):
+    def __init__(self, id_number: str):
         self.id_number: str = id_number
         self.clean_input()
         self.birthdate: datetime = self.calculate_birthday()
@@ -24,29 +28,6 @@ class SouthAfricanIdentityNumber(object):
         self.gender = self.get_gender()
         self.citizenship = self.get_citizenship()
         self.age = self.get_age()
-        self.logging_config = (
-            logging_conf
-            if logging_conf
-            else {
-                "handlers": [
-                    {
-                        "sink": sys.stdout,
-                        "format": "[Lib za_id_number] {time} - {message}",
-                    },
-                    {
-                        "sink": "za_id_number.log",
-                        "serialize": True,
-                        "format": "[Lib za_id_number] {time} - {message}",
-                    },
-                ],
-            }
-        )
-        logger.configure(**self.logging_config)
-        if not logging:
-            logger.disable("za_id_number")
-        else:
-            logger.enable("za_id_number")
-            logger.info("Logger Enabled")
 
     def clean_input(self):
         self.id_number = self.id_number.strip()
@@ -85,14 +66,14 @@ class SouthAfricanIdentityNumber(object):
             else:
                 return Gender.MALE.value
 
-        except Exception as e:
+        except ValueError as e:
             logger.error(e)
             return None
 
     def get_citizenship(self):
         """
         Citizen or resident.
-        Only these two classes of people can recieve and ID number
+        Only these two classes of people can receive an ID number
         """
         try:
             citizen_num = int(self.id_number[10])
@@ -101,7 +82,7 @@ class SouthAfricanIdentityNumber(object):
                 if citizen_num == 0
                 else CitizenshipClass.CITIZEN_NOT_BORN.value
             )
-        except Exception as e:
+        except ValueError as e:
             logger.error(e)
             return False
 
@@ -124,11 +105,9 @@ class SouthAfricanIdentityNumber(object):
 
 
 class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
-    def __init__(
-        self, id_number: str, logging: bool = False, logging_config: dict = {}
-    ):
+    def __init__(self, id_number: str):
         # super(SouthAfricanIdentityValidate, self).__init__(id_number)
-        super().__init__(id_number, logging, logging_config)
+        super().__init__(id_number)
         self.valid = self.validate()
 
     @lru_cache(100)

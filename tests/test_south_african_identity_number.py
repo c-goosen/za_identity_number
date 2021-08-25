@@ -6,17 +6,17 @@ import datetime
 
 @pytest.fixture
 def test_identity_female():
-    return SouthAfricanIdentityNumber("9902200037082", logging=True)
+    return SouthAfricanIdentityNumber("9902200037082")
 
 
 @pytest.fixture
 def test_identity_male():
-    return SouthAfricanIdentityNumber("2001015800085", logging=True)
+    return SouthAfricanIdentityNumber("2001015800085")
 
 
 @pytest.fixture
 def test_identity():
-    return SouthAfricanIdentityNumber("9902204720082", logging=True)
+    return SouthAfricanIdentityNumber("9902204720082")
 
 
 def test_year(test_identity):
