@@ -1,6 +1,5 @@
 from za_id_number.za_id_number import (
     SouthAfricanIdentityValidate,
-    SouthAfricanIdentityNumber,
     SouthAfricanIdentityGenerate,
     generate_random_id,
 )
@@ -43,12 +42,8 @@ def test_SouthAfricanIdentityGenerate_gender(test_input, expected):
     "test_input,expected",
     [
         ("citizen", CitizenshipClass.CITIZEN_BORN.value),
-        ("0", CitizenshipClass.CITIZEN_BORN.value),
-        (0, CitizenshipClass.CITIZEN_BORN.value),
         (CitizenshipClass.CITIZEN_BORN, CitizenshipClass.CITIZEN_BORN.value),
         ("resident", CitizenshipClass.CITIZEN_NOT_BORN.value),
-        ("1", CitizenshipClass.CITIZEN_NOT_BORN.value),
-        (1, CitizenshipClass.CITIZEN_NOT_BORN.value),
         (CitizenshipClass.CITIZEN_NOT_BORN, CitizenshipClass.CITIZEN_NOT_BORN.value),
     ],
 )

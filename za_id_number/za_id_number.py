@@ -245,9 +245,9 @@ class SouthAfricanIdentityGenerate(SouthAfricanIdentityValidate):
             print(f"random_choice {random_choice}")
             return random_choice
         else:
-            if citizenship in ["citizen", "0", 0, CitizenshipClass.CITIZEN_BORN]:
+            if citizenship in ["citizen", CitizenshipClass.CITIZEN_BORN]:
                 return f"{0:01d}"
-            elif citizenship in ["resident", "1", 1, CitizenshipClass.CITIZEN_NOT_BORN]:
+            elif citizenship in ["resident", CitizenshipClass.CITIZEN_NOT_BORN]:
                 return f"{1:01d}"
 
     @classmethod

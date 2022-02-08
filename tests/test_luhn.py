@@ -7,8 +7,8 @@ def test_luhn_validate():
 
     pos = luhn.validate("9001245289086")
     neg = luhn.validate("0000000000001")
-    assert pos == True
-    assert neg == False
+    assert pos is True
+    assert neg is False
 
 
 def test_luhn_generate():

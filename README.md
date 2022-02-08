@@ -115,6 +115,11 @@ SouthAfricanIdentityValidate("9202204720082").identity_length()
 # gender and citizenship can be specified for specific random
 # id numbers
 SouthAfricanIdentityGenerate()
+# or
+SouthAfricanIdentityGenerate(gender="male", citizenship='citizen')
+# or
+from za_id_number.constants import Gender, CitizenshipClass
+SouthAfricanIdentityGenerate(gender=Gender.FEMALE, citizenship=CitizenshipClass.CITIZEN_BORN)
 # generate random ID number without using class obj
 generate_random_id()
 
