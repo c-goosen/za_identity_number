@@ -43,7 +43,7 @@ jobs:
         run: poetry run flake8
 
       - name: Run Bandit Static Security Analysis
-        run: poetry run bandit -r za_id_number/
+        run: poetry run bandit -r za_id_number/ --skip B311
 
 #      - name: Run Snyk to check for vulnerabilities
 #        uses: snyk/actions/python@master

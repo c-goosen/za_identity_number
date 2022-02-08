@@ -130,8 +130,17 @@ Questions/Ideas/Feedback
 christogoosen@gmail.com
 christo@anomaloustech.co.za
 
-Future features:
-* Generating random ID numbers
+## Future features:
+* Ask for some please
+
+## CI/CD
+Covers python:
+* 3.6
+* 3.7
+* 3.8
+* 3.9
+* 3.10
+Check CI: https://github.com/c-goosen/za_identity_number/actions
 
 # Releases:
 * 0.0.7
