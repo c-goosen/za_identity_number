@@ -1,15 +1,34 @@
-from datetime import date, datetime
-from luhn import verify
-from za_id_number.constants import Gender, CitizenshipClass, LIB_DATE_FORMAT
+from datetime import date, datetime, timedelta
+import random
 
+import fast_luhn as luhn
+from za_id_number.constants import (
+    Gender,
+    CitizenshipClass,
+    LIB_DATE_FORMAT,
+    LIB_ID_DATE_FORMAT,
+)
 from functools import lru_cache
-from loguru import logger
+import logging
 
+
+# logger = logging.getLogger().isEnabled(level)
 # Since this is a library we immediately disable logging.
-# If logging within the library is desired, then call:
-#     logger.enable("za_id_number")
+# If logging within the library is desired, then add a handler to the logger
+# or call SouthAfricanIdentityValidate.get_logger(level=logging.DEBUG)
+logger = logging.getLogger("za_id_number")
+logger.addHandler(logging.NullHandler())
 # from within your script.
-logger.disable("za_id_number")
+# logger = SouthAfricanIdentityValidate.get_logger(level=logging.DEBUG)
+# logger.debug("Hello")
+
+
+def check_length(f):
+    def wrapper(*args):
+        print(args[0].id_number)
+        return f(*args)
+
+    return wrapper
 
 
 class SouthAfricanIdentityNumber(object):
@@ -20,6 +39,7 @@ class SouthAfricanIdentityNumber(object):
 
     def __init__(self, id_number: str):
         self.id_number: str = id_number
+        self.length_valid = True if len(id_number) == 13 else False
         self.clean_input()
         self.birthdate: datetime = self.calculate_birthday()
         self.year = self.get_year()
@@ -28,6 +48,34 @@ class SouthAfricanIdentityNumber(object):
         self.gender = self.get_gender()
         self.citizenship = self.get_citizenship()
         self.age = self.get_age()
+
+    @staticmethod
+    def get_logger(level=logging.DEBUG):
+        """
+        Helper for quickly adding a StreamHandler to the logger. Useful for
+        debugging. Logger not on by default
+
+        Returns the handler after adding it.
+        """
+        logger = logging.getLogger(__name__)
+        handler = logging.StreamHandler()
+        handler.setFormatter(
+            logging.Formatter("[%(asctime)s] [%(module)s] [%(levelname)s]: %(message)s")
+        )
+        logger.addHandler(handler)
+        logger.setLevel(level)
+        logger.debug(f"Added a {level} logging handler to logger: %s", __name__)
+        return logger
+
+    @lru_cache(100)
+    def identity_length(self) -> bool:
+        """
+        Test identity number is 13 characters
+        """
+        if len(str(self.id_number)) != 13:
+            return False
+        else:
+            return True
 
     def clean_input(self):
         self.id_number = self.id_number.strip()
@@ -61,7 +109,8 @@ class SouthAfricanIdentityNumber(object):
     def get_gender(self) -> str:
         try:
             gen_num = int(self.id_number[6:10])
-            if gen_num <= 4999:
+            print(f"gen_num {gen_num}")
+            if gen_num < 5000:
                 return Gender.FEMALE.value
             else:
                 return Gender.MALE.value
@@ -82,7 +131,7 @@ class SouthAfricanIdentityNumber(object):
                 if citizen_num == 0
                 else CitizenshipClass.CITIZEN_NOT_BORN.value
             )
-        except ValueError as e:
+        except Exception as e:
             logger.error(e)
             return False
 
@@ -135,7 +184,7 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
         """
         if self.identity_length() and self.valid_birth_date():
             try:
-                return bool(verify(self.id_number))
+                return bool(luhn.validate(self.id_number))
             except ValueError as e:
                 logger.error(e)
                 return False
@@ -153,12 +202,71 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
         else:
             return {}
 
-    @lru_cache(100)
-    def identity_length(self) -> bool:
-        """
-        Test identity number is 13 characters
-        """
-        if len(str(self.id_number)) != 13:
-            return False
+
+class SouthAfricanIdentityGenerate(SouthAfricanIdentityValidate):
+    def __init__(self, gender=None, citizenship=None):
+        # super(SouthAfricanIdentityValidate, self).__init__(id_number)
+        id_number = self.generate(gender=gender, citizenship=citizenship)
+        super().__init__(id_number)
+
+    @staticmethod
+    def generate_date():
+        time_between_dates = date.today() - date(1900, 1, 1)
+        days_between_dates = time_between_dates.days
+        random_number_of_days = random.randrange(days_between_dates)
+        random_date = date.today() + timedelta(days=random_number_of_days)
+        return random_date.strftime(LIB_ID_DATE_FORMAT)
+
+    @staticmethod
+    def generate_gender(gender=None):
+        if gender:
+            if gender in ["female", "f", Gender.FEMALE]:
+                print("hit F")
+                min = 0
+                max = 5000
+            elif gender in ["male", "m", Gender.MALE]:
+                print("hit M")
+                min = 5000
+                max = 10000
         else:
-            return True
+            print("hit if")
+            min = 0
+            max = 10000
+        rand_int = random.randrange(min, max)
+        rand_int = f"{rand_int:04d}"
+        print(rand_int)
+        return rand_int
+
+    @staticmethod
+    def generate_citizenship(citizenship=None):
+
+        if not citizenship:
+            random_choice = random.choice([f"{0:01d}", f"{1:01d}"])
+            print(f"random_choice {random_choice}")
+            return random_choice
+        else:
+            if citizenship in ["citizen", "0", 0, CitizenshipClass.CITIZEN_BORN]:
+                return f"{0:01d}"
+            elif citizenship in ["resident", "1", 1, CitizenshipClass.CITIZEN_NOT_BORN]:
+                return f"{1:01d}"
+
+    @classmethod
+    def generate(cls, gender=None, citizenship=None):
+        _date = cls.generate_date()
+        _gender = cls.generate_gender(gender=gender)
+        _citizenship = cls.generate_citizenship(citizenship=citizenship)
+        _race_deprecated = 8
+        _luhn_nr = luhn.complete(
+            f"{_date}{_gender}{_citizenship}{_race_deprecated:01d}"
+        )
+        print(_luhn_nr)
+        print(f"len {len(_luhn_nr)}")
+        return _luhn_nr
+
+
+def generate_random_id(gender=None, citizenship=None):
+    return SouthAfricanIdentityGenerate.generate(gender=gender, citizenship=citizenship)
+
+
+def generate_random_number(n=13):
+    return luhn.generate(n)
