@@ -2,13 +2,15 @@
 ZA / RSA Identity Number 
 Library to validate/check/manipulate and retrieve ID number info for South African IDs
 
-Current version: 0.0.6
+Current version: 0.0.7
+
+Downloads total:  [![Downloads](https://static.pepy.tech/personalized-badge/za-id-number?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)](https://pepy.tech/project/za-id-number)
 
 Poetry & pip compatibility
 
 Python 3.5 or greater for f-strings
 
-Installation:
+# Installation:
 
 pip:
 ```bash
@@ -35,9 +37,9 @@ For more info: https://www.westerncape.gov.za/sites/www.westerncape.gov.za/files
 
 Easiest ZA ID validation is the length. The length must be exactly 13 integers.
 
-Example:
+# Example:
 ```python
-from za_id_number.za_identity_number import SouthAfricanIdentityValidate
+from za_id_number.za_id_number import SouthAfricanIdentityValidate
 
 if __name__ == "__main__":
     za_validation = SouthAfricanIdentityValidate("9202204720082")
@@ -45,17 +47,34 @@ if __name__ == "__main__":
     za_identity = za_validation.identity()
     print(f"Valid: {valid}, Identity: {za_identity}")
 ```
+# Logging
+As its a library logging is off by default.
+To get a logger for the library you can use the following example:
+```python
+    logger = SouthAfricanIdentityValidate.get_logger(level=logging.DEBUG)
+    # logger = logging.getLogger("za_id_number")
+    # logger.removeHandler(logging.NullHandler())
+    # logger.addHandler(logging.StreamHandler())
+    za_validation = SouthAfricanIdentityValidate("9202204720082")
+    valid = za_validation.validate()
+    za_identity = za_validation.identity()
+    logger.info(f"Valid: {valid}, Identity: {za_identity}")
+    print(SouthAfricanIdentityValidate("99").identity_length())
+```
 
-Classes:
+# Classes:
 ```python
 # Validation class, inherits from SouthAfricanIdentityNumber
-validate_id = SouthAfricanIdentityValidate("9001245289086")
+validate_id_obj = SouthAfricanIdentityValidate("9001245289086")
 
 # SouthAfricanIdentityNumber class
 identity_obj = SouthAfricanIdentityNumber("9001245289086")
+
+# SouthAfricanIdentityGenerate class
+generated_id_obj = SouthAfricanIdentityGenerate()
 ```
 
-Class Attributes:
+# Class Attributes:
 ```python
 # SouthAfricanIdentityValidate
 SouthAfricanIdentityValidate("9202204720082").valid
@@ -72,14 +91,8 @@ SouthAfricanIdentityNumber("9202204720082").age
 
 ```
 
-Methods:
+# Methods:
 ```python
-# SouthAfricanIdentityValidate class
-SouthAfricanIdentityValidate("9202204720082").valid_birth_date()
-SouthAfricanIdentityValidate("9202204720082").validate()
-SouthAfricanIdentityValidate("9202204720082").identity()
-SouthAfricanIdentityValidate("9202204720082").identity_length()
-
 # SouthAfricanIdentityNumber class
 SouthAfricanIdentityNumber("9202204720082").get_age()
 SouthAfricanIdentityNumber("9202204720082").get_citizenship()
@@ -90,6 +103,28 @@ SouthAfricanIdentityNumber("9202204720082").get_year()
 SouthAfricanIdentityNumber("9202204720082").get_day()
 
 
+# SouthAfricanIdentityValidate class
+# Inherits from SouthAfricanIdentityNumber
+# All attributes and methods available
+SouthAfricanIdentityValidate("9202204720082").valid_birth_date()
+SouthAfricanIdentityValidate("9202204720082").validate()
+SouthAfricanIdentityValidate("9202204720082").identity()
+SouthAfricanIdentityValidate("9202204720082").identity_length()
+
+# SouthAfricanIdentityGenerate class
+# Inherits from SouthAfricanIdentityValidate
+# All attributes and methods available
+# gender and citizenship can be specified for specific random
+# id numbers
+SouthAfricanIdentityGenerate()
+# or
+SouthAfricanIdentityGenerate(gender="male", citizenship='citizen')
+# or
+from za_id_number.constants import Gender, CitizenshipClass
+SouthAfricanIdentityGenerate(gender=Gender.FEMALE, citizenship=CitizenshipClass.CITIZEN_BORN)
+# generate random ID number without using class obj
+generate_random_id()
+
 ```
 
 Questions/Ideas/Feedback
@@ -97,5 +132,25 @@ Questions/Ideas/Feedback
 christogoosen@gmail.com
 christo@anomaloustech.co.za
 
-Future features:
-* Generating random ID numbers
+## Future features:
+* Ask for some please
+
+## CI/CD
+Covers python:
+* 3.6
+* 3.7
+* 3.8
+* 3.9
+* 3.10
+Check CI: https://github.com/c-goosen/za_identity_number/actions
+
+# Releases:
+* 0.0.7
+  * Upgrade packages idenitified by github security scanning
+  * Remove loguru
+  * Disable loggin in library by default
+  * Fixed some exceptions
+  * Removed luhn library for fast-luhn
+  * fast-luhn adds generate and complete functions
+  * Generate Random ID numbers
+  * Generate random luhn numbers of length n

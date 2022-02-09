@@ -7,6 +7,7 @@ https://www.westerncape.gov.za/general-publication/decoding-your-south-african-i
 """
 
 LIB_DATE_FORMAT = "%y-%m-%d"
+LIB_ID_DATE_FORMAT = "%y%m%d"
 
 
 class Gender(Enum):

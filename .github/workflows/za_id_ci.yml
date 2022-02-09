@@ -14,7 +14,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.6, 3.7, 3.8, 3.9, 3.10.2]
 
     steps:
       - uses: actions/checkout@master
@@ -43,7 +43,7 @@ jobs:
         run: poetry run flake8
 
       - name: Run Bandit Static Security Analysis
-        run: poetry run bandit -r za_id_number/
+        run: poetry run bandit -r za_id_number/ --skip B311
 
 #      - name: Run Snyk to check for vulnerabilities
 #        uses: snyk/actions/python@master
