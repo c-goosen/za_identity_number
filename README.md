@@ -4,6 +4,8 @@ Library to validate/check/manipulate and retrieve ID number info for South Afric
 
 Current version: 0.0.7
 
+Downloads total:  [![Downloads](https://static.pepy.tech/personalized-badge/za-id-number?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)](https://pepy.tech/project/za-id-number)
+
 Poetry & pip compatibility
 
 Python 3.5 or greater for f-strings
