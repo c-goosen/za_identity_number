@@ -20,6 +20,7 @@ pytest-runner = "^5.2"
 black = "^22.10"
 bandit = "^1.7.2"
 
+
 flake8 = "^4.0.1"
 twine = "^3.8.0"
 setuptools = "^51.3.3"
