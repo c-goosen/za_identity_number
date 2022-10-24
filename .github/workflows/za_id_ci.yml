@@ -24,6 +24,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: apt dependencies
+        run: sudo apt-get install -y python3-setuptools
+        
       - name: Upgrade pip
         run: python3 -m pip install --upgrade pip setuptools wheel
 
