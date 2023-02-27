@@ -21,7 +21,7 @@ black = "^22.1"
 bandit = "^1.7.4"
 
 flake8 = "^5.0.4"
-twine = "^4.0.1"
+twine = "^4.0.2"
 setuptools = "^67.4.0"
 pytest-cov = "^3.0.0"
 python-dateutil = "^2.8.2"
