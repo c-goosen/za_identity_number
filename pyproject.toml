@@ -12,7 +12,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-fast-luhn = "^0.1.5"
+fast-luhn = "0.1.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.0.0"
