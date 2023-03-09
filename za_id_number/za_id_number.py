@@ -2,7 +2,6 @@ from datetime import date, datetime, timedelta
 import random
 
 import luhn
-from luhn import verify as validate
 from za_id_number.constants import (
     Gender,
     CitizenshipClass,
