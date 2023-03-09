@@ -257,9 +257,7 @@ class SouthAfricanIdentityGenerate(SouthAfricanIdentityValidate):
         _gender = cls.generate_gender(gender=gender)
         _citizenship = cls.generate_citizenship(citizenship=citizenship)
         _race_deprecated = 8
-        _luhn_nr = luhn.append(
-            f"{_date}{_gender}{_citizenship}{_race_deprecated:01d}"
-        )
+        _luhn_nr = luhn.append(f"{_date}{_gender}{_citizenship}{_race_deprecated:01d}")
         logger.debug(_luhn_nr)
         logger.debug(f"len {len(_luhn_nr)}")
         return _luhn_nr
@@ -267,4 +265,3 @@ class SouthAfricanIdentityGenerate(SouthAfricanIdentityValidate):
 
 def generate_random_id(gender=None, citizenship=None):
     return SouthAfricanIdentityGenerate.generate(gender=gender, citizenship=citizenship)
-

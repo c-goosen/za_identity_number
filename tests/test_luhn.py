@@ -26,5 +26,3 @@ def test_luhn_digit():
     luhn_digit = luhn.generate("900124528908")
     assert luhn_digit == 6
     assert luhn.verify(f"900124528908{luhn_digit}")
-
-
