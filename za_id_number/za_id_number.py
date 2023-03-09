@@ -1,7 +1,8 @@
 from datetime import date, datetime, timedelta
 import random
 
-import fast_luhn as luhn
+import luhn
+from luhn import verify as validate
 from za_id_number.constants import (
     Gender,
     CitizenshipClass,
@@ -25,7 +26,7 @@ logger.addHandler(logging.NullHandler())
 
 def check_length(f):
     def wrapper(*args):
-        print(args[0].id_number)
+        logger.debug(args[0].id_number)
         return f(*args)
 
     return wrapper
@@ -109,7 +110,7 @@ class SouthAfricanIdentityNumber(object):
     def get_gender(self) -> str:
         try:
             gen_num = int(self.id_number[6:10])
-            print(f"gen_num {gen_num}")
+            logger.debug(f"gen_num {gen_num}")
             if gen_num < 5000:
                 return Gender.FEMALE.value
             else:
@@ -184,7 +185,7 @@ class SouthAfricanIdentityValidate(SouthAfricanIdentityNumber):
         """
         if self.identity_length() and self.valid_birth_date():
             try:
-                return bool(luhn.validate(self.id_number))
+                return bool(luhn.verify(self.id_number))
             except ValueError as e:
                 logger.error(e)
                 return False
@@ -221,20 +222,20 @@ class SouthAfricanIdentityGenerate(SouthAfricanIdentityValidate):
     def generate_gender(gender=None):
         if gender:
             if gender in ["female", "f", Gender.FEMALE]:
-                print("hit F")
+                logger.debug("hit F")
                 min = 0
                 max = 5000
             elif gender in ["male", "m", Gender.MALE]:
-                print("hit M")
+                logger.debug("hit M")
                 min = 5000
                 max = 10000
         else:
-            print("hit if")
+            logger.debug("hit if")
             min = 0
             max = 10000
         rand_int = random.randrange(min, max)
         rand_int = f"{rand_int:04d}"
-        print(rand_int)
+        logger.debug(rand_int)
         return rand_int
 
     @staticmethod
@@ -242,7 +243,7 @@ class SouthAfricanIdentityGenerate(SouthAfricanIdentityValidate):
 
         if not citizenship:
             random_choice = random.choice([f"{0:01d}", f"{1:01d}"])
-            print(f"random_choice {random_choice}")
+            logger.debug(f"random_choice {random_choice}")
             return random_choice
         else:
             if citizenship in ["citizen", CitizenshipClass.CITIZEN_BORN]:
@@ -256,17 +257,14 @@ class SouthAfricanIdentityGenerate(SouthAfricanIdentityValidate):
         _gender = cls.generate_gender(gender=gender)
         _citizenship = cls.generate_citizenship(citizenship=citizenship)
         _race_deprecated = 8
-        _luhn_nr = luhn.complete(
+        _luhn_nr = luhn.append(
             f"{_date}{_gender}{_citizenship}{_race_deprecated:01d}"
         )
-        print(_luhn_nr)
-        print(f"len {len(_luhn_nr)}")
+        logger.debug(_luhn_nr)
+        logger.debug(f"len {len(_luhn_nr)}")
         return _luhn_nr
 
 
 def generate_random_id(gender=None, citizenship=None):
     return SouthAfricanIdentityGenerate.generate(gender=gender, citizenship=citizenship)
 
-
-def generate_random_number(n=13):
-    return luhn.generate(n)
