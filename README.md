@@ -1,14 +1,16 @@
 # za_identity_number
+
 ZA / RSA Identity Number 
 Library to validate/check/manipulate and retrieve ID number info for South African IDs
 
-Current version: 0.0.7
+Current version: 0.0.8
 
 Downloads total:  [![Downloads](https://static.pepy.tech/personalized-badge/za-id-number?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)](https://pepy.tech/project/za-id-number)
 
 Poetry & pip compatibility
 
-Python 3.5 or greater for f-strings
+Python 3.5 or greater for f-strings.
+Officially only support from py 3.7 >=
 
 # Installation:
 
@@ -154,3 +156,7 @@ Check CI: https://github.com/c-goosen/za_identity_number/actions
   * fast-luhn adds generate and complete functions
   * Generate Random ID numbers
   * Generate random luhn numbers of length n
+* 0.0.8
+  * Removed fast-luhn library as pyo3 rust implementation not building for Mac or python greater than 3.8
+  * Simplified library.
+  * Security issues in dependencies updated
