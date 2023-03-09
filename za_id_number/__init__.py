@@ -1,4 +1,4 @@
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 
 
 # Place this in your library's uppermost `__init__.py`

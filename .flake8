@@ -11,6 +11,7 @@ extend-ignore =
     # https://www.flake8rules.com/rules/W503.html
     W503
 extend-exclude =
+    .build,
     .circleci,
     .github,
     .mypy_cache,

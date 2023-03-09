@@ -4,7 +4,7 @@ from za_id_number.za_id_number import (
     generate_random_id,
 )
 from za_id_number.constants import Gender, CitizenshipClass
-import pytest
+import pytest  # noqa
 
 
 def test_generate_random_id():
