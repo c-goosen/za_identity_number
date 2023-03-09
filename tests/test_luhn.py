@@ -1,5 +1,5 @@
 import luhn
-import pytest   # noqa
+import pytest  # noqa
 
 
 def test_luhn_validate():
