@@ -3,7 +3,7 @@
 ZA / RSA Identity Number 
 Library to validate/check/manipulate and retrieve ID number info for South African IDs
 
-Current version: 0.0.8
+Current version: 0.0.9
 
 Downloads total:  [![Downloads](https://static.pepy.tech/personalized-badge/za-id-number?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)](https://pepy.tech/project/za-id-number)
 
@@ -11,6 +11,8 @@ Poetry & pip compatibility
 
 Python 3.5 or greater for f-strings.
 Officially only support from py 3.7 >=
+
+Python3.12 support added in CI
 
 # Installation:
 
@@ -160,3 +162,6 @@ Check CI: https://github.com/c-goosen/za_identity_number/actions
   * Removed fast-luhn library as pyo3 rust implementation not building for Mac or python greater than 3.8
   * Simplified library.
   * Security issues in dependencies updated
+* 0.0.9
+  * Add python 3.12 to CI
+  * Security updates in dependencies
