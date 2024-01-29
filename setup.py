@@ -65,7 +65,7 @@ setup(
     packages=find_packages(
         exclude=["docs", "docs-src", "tests", "tests.*", "tutorial"]
     ),
-    setup_requires=["luhn >=0.2.0", "setuptools"],
+    setup_requires=["luhn >=0.2.0", "setuptools >= 67.4.0"],
     install_requires=["luhn >= 0.2.0"],
     test_suite="tests",
     tests_require=tests_require,
