@@ -141,12 +141,14 @@ christo@anomaloustech.co.za
 
 ## CI/CD
 Covers python:
-* 3.6
-* 3.7
-* 3.8
 * 3.9
 * 3.10
+* 3.11
+* 3.12
+* 3.13
 Check CI: https://github.com/c-goosen/za_identity_number/actions
+
+Keeping up with python release cycle: https://devguide.python.org/versions/
 
 # Releases:
 * 0.0.7
