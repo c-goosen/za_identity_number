@@ -11,7 +11,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.9.0"
 luhn = "^0.2.0"
 
 [tool.poetry.dev-dependencies]
