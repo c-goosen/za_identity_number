@@ -2,7 +2,7 @@ name: ZA ID CI
 
 on:
   push:
-    branches: [dev, test, master]
+    branches: [dev, test, main]
   pull_request:
     branches:
       - '*'
