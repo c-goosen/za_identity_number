@@ -38,7 +38,7 @@ setup(
     url="https://github.com/c-goosen/za_identity_number",
     author="Christo Goosen",
     author_email="christogoosen@gmail.com",
-    python_requires=">=3.5.0",
+    python_requires=">=3.9.0",
     include_package_data=True,
     license="MIT",
     classifiers=[
