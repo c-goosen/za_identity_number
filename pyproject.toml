@@ -15,14 +15,14 @@ python = "^3.9.0"
 luhn = "^0.2.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^8.3.4"
+pytest = "^8.3.5"
 pytest-runner = "^6.0"
 black = "^22.1"
 bandit = "^1.7.5"
 
 flake8 = "^7.1.1"
 twine = "^6.1.0"
-setuptools = "^75.8.0"
+setuptools = "^76.0.0"
 pytest-cov = "^6.0.0"
 python-dateutil = "^2.9.0"
 nose = "^1.3.7"
