@@ -15,7 +15,7 @@ python = "^3.9.0"
 luhn = "^0.2.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^8.3.5"
+pytest = "^8.4.1"
 pytest-runner = "^6.0"
 black = "^22.1"
 bandit = "^1.7.5"
