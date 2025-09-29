@@ -14,7 +14,7 @@ packages = [
 python = "^3.9.0"
 luhn = "^0.2.0"
 
-[tool.poetry.dev-dependencies]
+[poetry.group.dev.dependencies]
 pytest = "^8.3.5"
 pytest-runner = "^6.0"
 black = "^24.3"
