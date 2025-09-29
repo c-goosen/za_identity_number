@@ -1,0 +1,20 @@
+version = 1
+revision = 2
+requires-python = ">=3.9.0, <4"
+
+[[package]]
+name = "luhn"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b2/de/2e989e69fdc81222fd0015f0e9e6899d32e7feea3e5f43267d60a3431163/luhn-0.2.0.tar.gz", hash = "sha256:917174cecce8bcbbe56ac0d904dbedd06594b21b6f31d5a3ec161d455b0e59f7", size = 1734, upload-time = "2015-06-23T07:08:35.749Z" }
+
+[[package]]
+name = "za-id-number"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "luhn" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "luhn", specifier = ">=0.2.0,<0.3" }]
