@@ -24,26 +24,35 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Upgrade pip
-        run: python3 -m pip install --upgrade pip setuptools wheel
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
 
-      - name: Install Poetry
-        run: pip install poetry
+      - name: Install dependencies
+        run: uv sync --dev
 
-      - name: Install Dev Dependencies
-        run: poetry install
-
-      - name: Install Dependencies
-        run: poetry run python setup.py install
+      - name: Install package in editable mode
+        run: uv pip install -e .
 
       - name: Verify code has been formatted with Black
-        run: poetry run black . --check
+        run: uv run black . --check
 
       - name: Code Static Analysis
-        run: poetry run flake8
+        run: uv run flake8
 
       - name: Run Bandit Static Security Analysis
-        run: poetry run bandit -r za_id_number/ --skip B311
+        run: uv run bandit -r za_id_number/ --skip B311
+
+      - name: Run Semgrep Security Scan
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/secrets
+            p/python
+          generateSarif: "1"
+          generateGitlabSAST: "1"
 
 #      - name: Run Snyk to check for vulnerabilities
 #        uses: snyk/actions/python@master
@@ -53,4 +62,4 @@ jobs:
 #          args: --severity-threshold=high --file=pyproject.toml
 
       - name: Run Tests
-        run: poetry run python setup.py test
+        run: uv run pytest

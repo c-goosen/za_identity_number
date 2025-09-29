@@ -3,11 +3,11 @@
 ZA / RSA Identity Number 
 Library to validate/check/manipulate and retrieve ID number info for South African IDs
 
-Current version: 0.1.0
+Current version: 0.2.0
 
 Downloads total:  [![Downloads](https://static.pepy.tech/personalized-badge/za-id-number?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)](https://pepy.tech/project/za-id-number)
 
-Poetry & pip compatibility
+UV & pip compatibility
 
 Python 3.5 or greater for f-strings.
 Officially only support from py 3.7 >=
@@ -23,11 +23,11 @@ pip install za-id-number
 
 ```
 
-poetry:
+uv:
 
 ```bash
 
-poetry add za-id-number
+uv add za-id-number
 
 ```
 

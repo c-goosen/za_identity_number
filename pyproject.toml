@@ -1,33 +1,62 @@
-[tool.poetry]
+[project]
 name = "za-id-number"
-version = "0.1.0"
+version = "0.2.0"
 description = "South African (RSA/ZA) Identity Number checking and validation library"
-authors = ["Christo Goosen <christogoosen@gmail.com>"]
-license = "MIT"
-packages = [
-    { include = "za_id_number" },
-    { include = "za_id_number/*.py" },
-    { include = "za_id_number/**/*.py" },
+authors = [{ name = "Christo Goosen", email = "christogoosen@gmail.com" }]
+requires-python = ">=3.9.0,<4"
+license = { text = "MIT" }
+dependencies = ["luhn>=0.2.0,<0.3"]
+readme = "README.md"
+keywords = ["South Africa", "ID Number", "validation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: Unix",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: POSIX :: BSD :: FreeBSD",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development",
+    "Typing :: Typed",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.9.0"
-luhn = "^0.2.0"
-
-[tool.poetry.dev-dependencies]
-pytest = "^8.3.5"
-pytest-runner = "^6.0"
-black = "^24.3"
-bandit = "^1.7.5"
-
-flake8 = "^7.1.1"
-twine = "^6.1.0"
-setuptools = "^76.0.0"
-pytest-cov = "^6.0.0"
-python-dateutil = "^2.9.0"
-nose = "^1.3.7"
-trio = "^0.28.0"
-
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "za_id_number",
+    "za_id_number/*.py",
+    "za_id_number/**/*.py",
+]
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "za_id_number",
+    "za_id_number/*.py",
+    "za_id_number/**/*.py",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5,<9",
+    "pytest-runner>=6.0,<7",
+    "black>=24.3,<25",
+    "bandit>=1.7.5,<2",
+    "flake8>=7.1.1,<8",
+    "twine>=6.1.0,<7",
+    "setuptools>=76.0.0,<77",
+    "pytest-cov>=6.0.0,<7",
+    "python-dateutil>=2.9.0,<3",
+    "nose>=1.3.7,<2",
+    "trio>=0.28.0,<1",
+]
