@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: uv sync --dev
 
+      - name: Install package in editable mode
+        run: uv pip install -e .
+
       - name: Verify code has been formatted with Black
         run: uv run black . --check
 

@@ -4,8 +4,33 @@ version = "0.2.0"
 description = "South African (RSA/ZA) Identity Number checking and validation library"
 authors = [{ name = "Christo Goosen", email = "christogoosen@gmail.com" }]
 requires-python = ">=3.9.0,<4"
-license = "MIT"
+license = { text = "MIT" }
 dependencies = ["luhn>=0.2.0,<0.3"]
+readme = "README.md"
+keywords = ["South Africa", "ID Number", "validation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: Unix",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: POSIX :: BSD :: FreeBSD",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Software Development",
+    "Typing :: Typed",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.sdist]
 include = [
